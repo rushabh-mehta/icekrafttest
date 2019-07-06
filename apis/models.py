@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, int_list_validator
 from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
@@ -50,7 +50,6 @@ class FoodItem(models.Model):
     def __str__(self):
         return self.fooditem_name
 
-
 class Restaurant(models.Model):
     ''' This model has a many to many relation with the food-items, this relation can be used to build the menu
         for each restaurant'''
@@ -74,17 +73,27 @@ class Order(models.Model):
     #Relationships
     order_user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     order_restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    order_fooditem_relation = models.ManyToManyField(FoodItem)
+    order_fooditem_relation = models.ManyToManyField(FoodItem, through="OrderFoodItem")
     
     #Datafields
-    order_created_on = models.DateField()
-    order_updated_on = models.DateField()
+    order_created_on = models.DateField(auto_now_add=True)
+    order_updated_on = models.DateField(auto_now=True)
     order_table_number = models.IntegerField()
     order_active = models.BooleanField()
     order_total_amount = models.FloatField()
     order_confirm = models.BooleanField()
+    
+    # quantity_regex = int_list_validator(sep=",",allow_negative=False)
+    # order_quantity = models.CharField(validators=[quantity_regex], max_length=500, blank=True)
 
     def __str__(self):
         return str(self.order_created_on)+" "+str(self.order_restaurant_id)+" "+str(self.order_table_number)+" "+str(self.order_active)
     
 
+class OrderFoodItem(models.Model):
+    orderfooditem_order_id = models.ForeignKey(Order,on_delete=models.CASCADE)
+    orderfooditem_fooditem_id = models.ForeignKey(FoodItem,on_delete=models.CASCADE)
+    orderfooditem_quantity = models.IntegerField()
+
+    def __str__(self):
+        return str(self.orderfooditem_fflooditem_id)+" "+str(self.orderfooditem_quantity)

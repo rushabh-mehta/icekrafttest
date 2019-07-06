@@ -1,11 +1,12 @@
 from django.shortcuts import render,HttpResponseRedirect
 from rest_framework import generics
-from .models import Restaurant, FoodItem, Order, CustomUser
-from .serializers import RestaurantSerializer, FoodItemSerializer,OrderSerializer, CustomUserSerializer
+from .models import Restaurant, FoodItem, Order, CustomUser, OrderFoodItem
+from .serializers import RestaurantSerializer, FoodItemSerializer,OrderSerializer, CustomUserSerializer, OrderFoodItemSerializer
 import requests
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 class RestaurantList(generics.ListAPIView):
@@ -68,8 +69,17 @@ class CustomUserDetailByEmail(generics.ListAPIView):
         
     serializer_class = CustomUserSerializer
 
+class OrderFoodItemList(generics.ListAPIView):
 
-""" def place_order(request):
+    def get_queryset(self):
+        order_id = self.kwargs['orderfooditem_order_id']
+        order_object = Order.objects.get(pk=order_id)
+        return order_object.orderfooditem_set.all()
+
+    serializer_class = OrderFoodItemSerializer
+
+@csrf_exempt
+def place_order(request):
     '''Places an order based on the POST request from the front-end.
         Extracts data from the body of the request which is in json.
         Parses the json to get the individual elements.
@@ -78,37 +88,44 @@ class CustomUserDetailByEmail(generics.ListAPIView):
         Order object created and the specificied FoodItems'''
     
     # Check for a POST request and extract information from the json
-    if request.POST:
+    if request.method == "POST":
         received_json_data=json.loads(request.body)
 
-        user_id = 
+        user_id = received_json_data['order_user_id']
         user_object = CustomUser.objects.get(pk=user_id)
-        restaurant_id = 
+        restaurant_id = received_json_data['order_restaurant_id']
         restaurant_object = Restaurant.objects.get(pk=restaurant_id)
-        created_on = 
-        updated_on = 
-        table_number = 
-        active = 
-        total_amount = 
-        confirm = 
+        table_number = received_json_data['order_table_number']
+        active = True
+        total_amount = received_json_data['order_total_amount']
+        confirm = False
 
-        food_items_user_selected = 
+        food_items_user_selected = received_json_data['order_food_item_selected']
+        food_quantities = received_json_data['order_food_quantities']
+        #string_food_quantities = ",".join(repr(quantity) for quantity in food_quantities)
 
         # Create a new order
-        order_object = Order(order_user_id =, order_restaurant_id = , order_created_on = , order_updated_on = , 
-                            order_table_number = , order_active = , order_total_amount = , order_confirm = )
+        order_object = Order(order_user_id=user_object, order_restaurant_id=restaurant_object ,order_table_number=table_number,
+        order_active=active , order_total_amount=total_amount , order_confirm=confirm)
         order_object.save()
 
         # Add the relation between fooditems the user selected and the order object created above also calculate the total order bill.
-        total_amount = 0
+
+        # total_amount = 0
+        counter = 0
         for food in food_items_user_selected:
-            fooditem = FoodItem.objects.get(pk=food)
-            order_object.order_fooditem_relation.add(fooditem)
-            total_amount+= fooditem.fooditem_cost
+            fooditem_object = FoodItem.objects.get(pk=food)
+            food_quantity = food_quantities[counter]
+            order_object.order_fooditem_relation.add(fooditem_object)
+            #total_amount+= fooditem_object.fooditem_cost*food_quantity
+            OrderFoodItem.objects.create(orderfooditem_order_id=order_object, orderfooditem_fooditem_id=fooditem_object, orderfooditem_quantity=food_quantity)
+            counter+=1
         
         # Add the total bill to the order object created above.
-        order_object.order_total_amount = total_amount
-        order_object.save() """
+        # order_object.order_total_amount = total_amount
+        order_object.save()
+ 
+
 
 
 """ def user_register(request):
@@ -142,5 +159,4 @@ class CustomUserDetailByEmail(generics.ListAPIView):
 
 """ def user_forgot_password(request):
     pass """
-
 

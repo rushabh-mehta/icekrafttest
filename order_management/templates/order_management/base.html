@@ -1,0 +1,65 @@
+<!--Loads the path to the static file-->
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--JQUERY CDN-->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+        crossorigin="anonymous"></script>
+    <!--JQUERY CDN ENDS HERE-->
+
+    <!--BOOTSTRAP CDN-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!--BOOTSTRAP CDN ENDS-->
+
+    <link rel="stylesheet" type="text/css" href={% static 'order_management/base.css' %}>
+    <script src={% static 'order_management/base.js' %}></script>
+
+	<title>IceKraft</title>
+</head>
+<body>
+    
+    <div class="big_wrapper">
+
+        <nav class="sidebar" id="side_bar">
+            <ul>
+                <li>
+                    <span id="side_bar_heading">IceKraft</span>
+                </li>
+                <hr>
+                <li>
+                    <a href="#"><img src={% static 'order_management/images/checklist.png' %} id="sidebar_image">Active Orders</a>
+                </li>
+                <li>
+                        <a href="#"><img src={% static 'order_management/images/checklist.png' %} id="sidebar_image">Past Orders</a>
+                </li>
+                <li>
+                    <a href="#"><img src={% static 'order_management/images/menu_color.png' %} id="sidebar_image">Menu</a>
+                </li>
+                <li>
+                    <a href="#"><img src={% static 'order_management/images/users.png' %} id="sidebar_image">Edit Profile</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <button id="open_button" onclick="toggleNav()">&equiv;</button>
+            <button id="logout_button">Logout</button>
+            <hr>
+            {% block content %}
+            {% endblock %}
+        </div>
+
+</body>
+</html>
+
+
+<!--<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>-->

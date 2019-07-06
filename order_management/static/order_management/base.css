@@ -1,0 +1,97 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.sidebar {
+  height: 100%; /* 100% Full-height */
+  width: 0%; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #19222A; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  float: left;
+  
+}
+
+.sidebar>ul {
+	list-style-type: none;
+}
+
+.sidebar a {
+  padding: 15px 15px 15px 15px;
+  text-decoration: none;
+  font-size: 16px;
+  color: white;
+  display: block;
+  transition: 0.7s;
+}
+
+.sidebar a:hover {
+    background: #0099FF;
+}
+#side_bar_heading {
+  text-decoration: none;
+  font-size: 32px;
+  color: white;
+  display: block;
+  transition: 0.7s;
+  padding-left: 50px;
+}
+
+#content {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+#open_button {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #19222A;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+
+#open_button:hover {
+	background-color: #0099FF;
+
+}
+
+#logout_button {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #19222A;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+#logout_button:hover {
+	background-color: #0099FF;
+
+}
+
+hr {
+    clear: both;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#sidebar_image {
+    margin-right: 5px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+  #side_bar_heading{font-size: 10px;}
+}
+

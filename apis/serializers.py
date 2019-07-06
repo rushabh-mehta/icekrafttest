@@ -29,3 +29,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomUser
         fields = '__all__'
+
+class OrderFoodItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.OrderFoodItem
+        fields = '__all__'

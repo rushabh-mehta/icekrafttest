@@ -1,0 +1,44 @@
+body {
+	background-color: #3B8EA5;
+}
+
+.container {
+	margin-left: 35%;
+	margin-top: 5%;
+	width: 30%;
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+#forgotPassword {
+	margin-left: 50%;
+	color: #674676;
+}
+
+.submitButton {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #674676;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+}
+
+#page_heading {
+	text-align: center;
+	font-weight: bold;
+	color: white;
+}
+
+.submitButton:hover {
+	background-color: #444;
+}
+
+
+#login_heading {
+	text-align: center;
+	font-weight: bold;
+	color:  #3B8EA5;
+}

@@ -18,6 +18,9 @@ urlpatterns = [
     # api/order/2/2/ (DetailView)
     path('order/<int:order_restaurant_id>/<int:order_user_id>/', views.OrderUserList.as_view(), name='order_user_list'),
 
+    # api/order_fooditem/2/
+    path('orderfooditem/<int:orderfooditem_order_id>/', views.OrderFoodItemList.as_view(), name='orderfooditem_fooditem_list'),
+
     # api/user/ (ListView)
     path('user/', views.CustomUserList.as_view(), name='user_list'),
     # api/user/2/ (DetailView)
@@ -35,5 +38,5 @@ urlpatterns = [
     #path('forgot_password/',views.user_forgot_password,name='forgot_password')
 
     # api/place_order/
-    #path('place_order/',views.user_place_order,name='place_order')
+    path('place_order/',views.place_order,name='place_order')
 ]
