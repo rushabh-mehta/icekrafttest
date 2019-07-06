@@ -96,4 +96,4 @@ class OrderFoodItem(models.Model):
     orderfooditem_quantity = models.IntegerField()
 
     def __str__(self):
-        return str(self.orderfooditem_fflooditem_id)+" "+str(self.orderfooditem_quantity)
+        return str(self.orderfooditem_fooditem_id)+" "+str(self.orderfooditem_quantity)
