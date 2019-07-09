@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    
+	<title>IceKraft</title>
     <!--JQUERY CDN-->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
         crossorigin="anonymous"></script>
@@ -23,7 +25,9 @@
     <link rel="stylesheet" type="text/css" href={% static 'order_management/base.css' %}>
     <script src={% static 'order_management/base.js' %}></script>
 
-	<title>IceKraft</title>
+    {% block static %}
+    {% endblock %}
+
 </head>
 <body>
     

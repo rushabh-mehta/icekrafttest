@@ -1,7 +1,78 @@
 {% extends "order_management/base.html" %}
 
+{% load staticfiles %}
+
+
+{% block static %}
+
+
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src={% static 'js/jquery.bootstrap.modal.forms.js' %}></script>
+
+<script src = {% static 'order_management/active_order.js' %}></script>
+
+{% endblock %}
+
 
 {% block content %}
-<p>{{order_data}}</p>
-<p>{{food_data}}</p>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<table id="activeOrders">
+    <thead>
+        <tr>
+            <td>Order Created On</td>
+            <td>Order Updated On</td>
+            <td>Order Table Number</td>
+            <td>Order Active</td>
+            <td>Order Total Amount</td>
+            <td>Order Confirm</td>
+            <td>FoodItems</td>
+            <td>Update</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order,food in order_data %}
+        <tr>
+            <td>{{order.order_created_on}}</td>
+            <td>{{order.order_updated_on}}</td>
+            <td>{{order.order_table_number}}</td>
+            <td>{{order.order_active}}</td>
+            <td>{{order.order_total_amount}}</td>
+            <td>{{order.order_confirm}}</td>
+            <td>{{food}}</td>
+            <td>
+                <button type="button" class="update-order btn btn-sm btn-primary" data-id="{% url 'order_management:update_order' order.pk %}">
+                    <span class="fa fa-pencil">Update</span>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+      $(function () { 
+      // Update book buttons
+      $(".update-order").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      });
+    });
+  </script>
 {% endblock %}
+
