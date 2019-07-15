@@ -28,6 +28,9 @@ urlpatterns = [
     # api/user/admin@admin.com/ (DetailView)
     path('user/<str:user_email_id>/', views.CustomUserDetailByEmail.as_view(), name='user_detail_email'),
 
+    # api/user/2/active_orders/ (ListView)
+    path('user/<int:user_id>/active_orders/',views.UserActiveOrder.as_view(),name='user_active_orders'),
+
     # api/register/
     #path('register/',views.user_register,name='register')
 

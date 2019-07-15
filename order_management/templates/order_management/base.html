@@ -40,13 +40,13 @@
                 </li>
                 <hr>
                 <li>
-                    <a href="#"><img src={% static 'order_management/images/checklist.png' %} id="sidebar_image">Active Orders</a>
+                    <a href="{% url 'order_management:active_orders' %}"><img src={% static 'order_management/images/checklist.png' %} id="sidebar_image">Active Orders</a>
                 </li>
                 <li>
-                        <a href="#"><img src={% static 'order_management/images/checklist.png' %} id="sidebar_image">Past Orders</a>
+                        <a href="{% url 'order_management:past_orders' %}"><img src={% static 'order_management/images/checklist.png' %} id="sidebar_image">Past Orders</a>
                 </li>
                 <li>
-                    <a href="#"><img src={% static 'order_management/images/menu_color.png' %} id="sidebar_image">Menu</a>
+                    <a href="{% url 'order_management:restaurant_menu' %}"><img src={% static 'order_management/images/menu_color.png' %} id="sidebar_image">Menu</a>
                 </li>
                 <li>
                     <a href="#"><img src={% static 'order_management/images/users.png' %} id="sidebar_image">Edit Profile</a>
@@ -56,7 +56,7 @@
 
         <div id="content">
             <button id="open_button" onclick="toggleNav()">&equiv;</button>
-            <button id="logout_button">Logout</button>
+            <a href={% url 'order_management:logout' %}><button id="logout_button">Logout</button></a>
             <hr>
             {% block content %}
             {% endblock %}

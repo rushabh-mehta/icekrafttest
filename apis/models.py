@@ -76,8 +76,8 @@ class Order(models.Model):
     order_fooditem_relation = models.ManyToManyField(FoodItem, through="OrderFoodItem")
     
     #Datafields
-    order_created_on = models.DateField(auto_now_add=True)
-    order_updated_on = models.DateField(auto_now=True)
+    order_created_on = models.DateTimeField(auto_now_add=True)
+    order_updated_on = models.DateTimeField(auto_now=True)
     order_table_number = models.IntegerField()
     order_active = models.BooleanField()
     order_total_amount = models.FloatField()
@@ -91,9 +91,12 @@ class Order(models.Model):
     
 
 class OrderFoodItem(models.Model):
+    
     orderfooditem_order_id = models.ForeignKey(Order,on_delete=models.CASCADE)
-    orderfooditem_fooditem_id = models.ForeignKey(FoodItem,on_delete=models.CASCADE)
+    orderfooditem_fooditem_id = models.ForeignKey(FoodItem,on_delete=models.CASCADE,  related_name="orderfooditem_fooditem_id")
+    orderfooditem_fooditem_name = models.CharField(max_length = 500, blank=True)
     orderfooditem_quantity = models.IntegerField()
+
 
     def __str__(self):
         return str(self.orderfooditem_fooditem_id)+" "+str(self.orderfooditem_quantity)

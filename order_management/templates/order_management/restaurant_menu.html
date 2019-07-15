@@ -1,12 +1,8 @@
-{% extends "order_management/base.html" %}
+{% extends 'order_management/base.html' %}
 
 {% load staticfiles %}
 
-
 {% block static %}
-
-
-
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -19,11 +15,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src={% static 'js/jquery.bootstrap.modal.forms.js' %}></script>
 
+<script src = {% static 'order_management/restaurant_menu.js' %}></script>
+
 {% endblock %}
 
-
 {% block content %}
-
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modal">
     <div class="modal-dialog" role="document">
@@ -31,57 +27,56 @@
     </div>
 </div>
 
-<table id="activeOrders">
+<center><button class="create-restaurant btn btn-primary" type="button" name="button">Create Menu Item</button></center>
+<hr>
+
+<table id="restaurantMenu">
     <thead>
         <tr>
-            <th>Order Created On</th>
-            <th>Order Updated On</th>
-            <th>Order Table Number</th>
-            <th>Order Active</th>
-            <th>Order Total Amount</th>
-            <th>Order Confirm</th>
-            <th>FoodItems</th>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Description</th>     
+            <th>Picture</th>
             <th>Update</th>
         </tr>
     </thead>
     <tbody>
-        {% for order,food in order_data %}
-        <tr>
-            <td>{{order.order_created_on}}</td>
-            <td>{{order.order_updated_on}}</td>
-            <td>{{order.order_table_number}}</td>
-            <td>{{order.order_active}}</td>
-            <td>{{order.order_total_amount}}</td>
-            <td>{{order.order_confirm}}</td>
-            <td>{{food}}</td>
-            <td>
-                <button type="button" class="update-order btn btn-sm btn-primary" data-id="{% url 'order_management:update_order' order.pk %}">
+    {% for fooditem in fooditems %}
+    <tr>
+        <td>{{ fooditem.fooditem_name }}</td>
+        <td>{{ fooditem.fooditem_cost }}</td>
+        <td>{{ fooditem.fooditem_description }}</td>     
+        <td><img src={{ fooditem.fooditem_picture }}></td>
+        <td>
+                <button type="button" class="update-restaurant-menu btn btn-sm btn-primary" data-id="{% url 'order_management:update_restaurant_menu' fooditem.pk %}">
                     <span class="fa fa-pencil">Update</span>
                 </button>
-                <button type="button" class="delete-book btn btn-sm btn-danger" data-id="{% url 'order_management:delete_order' order.pk %}">
+                <button type="button" class="delete-restaurant-menu btn btn-sm btn-danger" data-id="{% url 'order_management:delete_restaurant_menu' fooditem.pk %}">
                     <span class="fa fa-trash">Delete</span>
                 </button>
             </td>
-        </tr>
-        {% endfor %}
+    </tr>
+    {% endfor %}
     </tbody>
 </table>
 <script>
+
 $(document).ready( function () {
-    $('#activeOrders').DataTable();
+    $('#restaurantMenu').DataTable();
 } );
 
 $(function () { 
-    // Update book buttons
-    $(".update-order").each(function () {
+    $(".create-restaurant").modalForm({formURL: '{% url "order_management:create_restaurant_menu" %}' });
+
+    $(".update-restaurant-menu").each(function () {
       $(this).modalForm({formURL: $(this).data('id')});
       });
 
-     $(".delete-book").each(function () {
+     $(".delete-restaurant-menu").each(function () {
       $(this).modalForm({formURL: $(this).data('id')});
       });
   });
 
 </script>
-{% endblock %}
+{%endblock content %}
 

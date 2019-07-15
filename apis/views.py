@@ -77,6 +77,13 @@ class OrderFoodItemList(generics.ListAPIView):
         return order_object.orderfooditem_set.all()
 
     serializer_class = OrderFoodItemSerializer
+class UserActiveOrder(generics.ListAPIView):
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Order.objects.filter(order_user_id = user_id,order_active=True)
+        
+    serializer_class = OrderSerializer
 
 @csrf_exempt
 def place_order(request):
@@ -114,11 +121,11 @@ def place_order(request):
         # total_amount = 0
         counter = 0
         for food in food_items_user_selected:
-            fooditem_object = FoodItem.objects.get(pk=food)
+            fooditem_object = FoodItem.objects.get(pk=int(food))
             food_quantity = food_quantities[counter]
-            order_object.order_fooditem_relation.add(fooditem_object)
+            #order_object.order_fooditem_relation.add(fooditem_object)
             #total_amount+= fooditem_object.fooditem_cost*food_quantity
-            OrderFoodItem.objects.create(orderfooditem_order_id=order_object, orderfooditem_fooditem_id=fooditem_object, orderfooditem_quantity=food_quantity)
+            OrderFoodItem.objects.create(orderfooditem_order_id=order_object, orderfooditem_fooditem_id=fooditem_object, orderfooditem_quantity=food_quantity, orderfooditem_fooditem_name = fooditem_object.fooditem_name)
             counter+=1
         
         # Add the total bill to the order object created above.

@@ -15,9 +15,7 @@
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src={% static 'js/jquery.bootstrap.modal.forms.js' %}></script>
+<script src = {% static 'order_management/past_orders.js' %}></script>
 
 {% endblock %}
 
@@ -31,7 +29,7 @@
     </div>
 </div>
 
-<table id="activeOrders">
+<table id="pastOrders">
     <thead>
         <tr>
             <th>Order Created On</th>
@@ -41,7 +39,6 @@
             <th>Order Total Amount</th>
             <th>Order Confirm</th>
             <th>FoodItems</th>
-            <th>Update</th>
         </tr>
     </thead>
     <tbody>
@@ -54,34 +51,9 @@
             <td>{{order.order_total_amount}}</td>
             <td>{{order.order_confirm}}</td>
             <td>{{food}}</td>
-            <td>
-                <button type="button" class="update-order btn btn-sm btn-primary" data-id="{% url 'order_management:update_order' order.pk %}">
-                    <span class="fa fa-pencil">Update</span>
-                </button>
-                <button type="button" class="delete-book btn btn-sm btn-danger" data-id="{% url 'order_management:delete_order' order.pk %}">
-                    <span class="fa fa-trash">Delete</span>
-                </button>
-            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<script>
-$(document).ready( function () {
-    $('#activeOrders').DataTable();
-} );
-
-$(function () { 
-    // Update book buttons
-    $(".update-order").each(function () {
-      $(this).modalForm({formURL: $(this).data('id')});
-      });
-
-     $(".delete-book").each(function () {
-      $(this).modalForm({formURL: $(this).data('id')});
-      });
-  });
-
-</script>
 {% endblock %}
 
