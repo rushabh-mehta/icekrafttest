@@ -131,7 +131,7 @@ def place_order(request):
         # Add the total bill to the order object created above.
         # order_object.order_total_amount = total_amount
         order_object.save()
-        
+        return render(request,'order_management/place_order_successful.html')
  
 
 
